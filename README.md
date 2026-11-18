@@ -1,27 +1,27 @@
 # Carbe Partners — Radar Inmobiliario
 
-Aplicación web Node.js para analizar oportunidades de inversión inmobiliaria. Compatible con Hostinger Business (Web App → Node.js → Other).
+Aplicación Node.js para analizar anuncios de inversión inmobiliaria con OpenAI y búsqueda web, con simulaciones de rentabilidad, costes, comparables, seguimiento y análisis financiero.
 
-## Publicación continua con GitHub + Hostinger
+## Repositorio y despliegue
 
-1. Crea un **repositorio privado** en GitHub llamado `carbe-partners` (sin inicializarlo con otros archivos).
-2. Sube **el contenido de esta carpeta** a la raíz del repositorio (`index.html`, `server.js`, `package.json`, etc.). Puedes utilizar **Add file → Upload files**.
-3. Hostinger: en el panel de la Web App, abre el menú `⋮` y selecciona **Connect to GitHub** o **Change repository**, según aparezca. Autoriza el acceso solo a este repositorio si es posible. Selecciona `carbe-partners` y la rama `main`.
-4. Configura: Node.js 20/22; framework **Other**; directorio raíz `./`; gestor `npm`; **comando de compilación `npm run build` o Ninguno**; directorio de salida vacío; archivo de entrada `server.js`. **Nunca `npm run start` como build**.
-5. En Hostinger → Variables de entorno agrega `OPENAI_API_KEY`, `OPENAI_MODEL=gpt-4.1`, `NODE_ENV=production`, `APP_USERNAME` y `APP_PASSWORD`. **No pongas claves en GitHub ni en el HTML**. Las variables APP_* activan acceso protegido con usuario y contraseña (HTTP Basic bajo HTTPS).
-6. Activa **Auto-deploy** de la rama `main`. Al guardar y subir cambios a esa rama se genera un nuevo despliegue. Confirma su estado en el panel.
-7. Abre `https://carbepartners.com/api/health` (o el dominio asignado) y comprueba que responde `ok:true` después de autenticarte. Prueba también la carga de una ficha y el análisis de una URL.
+Código principal: https://github.com/onatex/carbe-partners (repositorio privado). La rama de publicación es `main`.
 
-## Desarrollo
+Para vincularlo con **Hostinger Business**:
+1. Ve al panel de tu aplicación web Node.js existente y busca **Conectar GitHub / Cambiar repositorio**. Selecciona `onatex/carbe-partners`, rama `main`, y activa el despliegue automático si Hostinger ofrece la opción.
+2. Framework: `Other`; Node.js 20 o 22; raíz: `./`; gestor: `npm`; archivo de entrada: `server.js`.
+3. Comando de compilación: `npm run build` (comprobación de sintaxis que termina). **Nunca** `npm start` en compilación. Directorio de salida: vacío.
+4. En Hostinger, configura las variables privadas `OPENAI_API_KEY`, `OPENAI_MODEL`, `NODE_ENV=production`, `APP_USERNAME` y `APP_PASSWORD`. No incluyas valores secretos en GitHub.
+5. Una vez desplegado, entra en `https://carbepartners.com/api/health` y autentícate con el usuario configurado. Debe responder con `ok:true`. Después prueba una URL de Fotocasa o Yaencontre.
 
-- `npm run build` valida la sintaxis del servidor y termina inmediatamente.
-- `npm start` arranca el servidor web. **No debe utilizarse como compilación**.
-- `node --check server.js` comprueba la sintaxis.
+## Scripts
 
-## Límites y seguridad
+- `npm run build`: comprobación rápida `node --check server.js`.
+- `npm start`: arranque del servidor HTTP Node.js.
 
-- Los datos de inmuebles siguen guardándose **en el navegador (localStorage)**. GitHub no los sincroniza ni sustituye una base de datos.
-- La IA y los comparables consultan una API de pago; establece límites de consumo en OpenAI. El acceso Basic es una protección inicial, no un sistema completo multiusuario.
-- No se garantizan las fichas de portales con bloqueo, ni que todos los comparables estén disponibles. Verifica fuentes y precios.
-- Las publicaciones GitHub → Hostinger actualizan el código; **el asistente no puede editar el repositorio hasta que la conexión y los permisos estén habilitados**.
-- La versión desplegada mediante ZIP puede requerir conectar o cambiar el repositorio desde el panel Hostinger para habilitar auto-deploy. Haz una copia de cualquier dato alojado en el servidor antes de cambiar de fuente de despliegue.
+## Seguridad y límites
+
+- En producción es obligatorio configurar **ambas** `APP_USERNAME` y `APP_PASSWORD`; si faltan, la app deniega el acceso.
+- La clave OpenAI solo debe existir en las variables del servidor. Establece límites presupuestarios en OpenAI.
+- Los inmuebles y cambios del usuario siguen guardándose localmente en el navegador (`localStorage`); **no están sincronizados entre dispositivos**. La base de datos queda pendiente de implementar.
+- Las búsquedas web no garantizan acceso a todos los portales. Los comparables y precios deben verificarse.
+- Las actualizaciones en GitHub no llegarán a Hostinger hasta conectar el repositorio y activar el despliegue automático. No se ha confirmado todavía un despliegue remoto exitoso.
