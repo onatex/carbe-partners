@@ -1,0 +1,9 @@
+{
+  "name": "carbe-partners-radar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Radar inmobiliario de Carbe Partners para Hostinger Business",
+  "type": "module",
+  "engines": {"node": ">=20"},
+  "scripts": {"build": "node --check server.js", "start": "node server.js"}
+}
